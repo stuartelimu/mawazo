@@ -1,13 +1,15 @@
 <h1>{{ post.title }}</h1>
-views: {{ post.views }} | comments: {{ post.comment_count }} <br>
+views: {{ post.views }} | comments: {{ post.comments.count }} <br>
 author: {{ post.author }}
 
 <p>{{ post.content }}</p>
 
 <h5>Comments ({{post.comments.count}})</h5>
 {% for comment in comments %}
-<p>{{ comment.content }} {% if request.user.is_staff %}
+<p>{{ comment.user }}</p>
+<p>{{ comment.content }} {% if request.user.is_superuser %}
 <a href="{% url 'blog:comment_delete' comment.pk %}">Delete 🗑</a>{% endif %}</p>
+
 {% empty %}
 No comments.
 {% endfor %}
