@@ -5,6 +5,7 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from .models import Post, Author, Comment
 from .forms import PostForm, CommentForm
@@ -52,7 +53,7 @@ class PostDetailView(View):
     
 
 
-class PostCreateView(CreateView, LoginRequiredMixin):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ["title", "content"]
     template_name = "post_create.html"
@@ -63,7 +64,7 @@ class PostCreateView(CreateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ["title", "content"]
     template_name = "post_create.html"
@@ -74,13 +75,13 @@ class PostUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class PostDeleteView(DeleteView, LoginRequiredMixin):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = reverse_lazy("blog:index")
     template_name = "confirm_delete_post.html"
 
 
-class DraftListView(ListView):
+class DraftListView(LoginRequiredMixin, ListView):
     queryset = Post.objects.filter(published_at__isnull=True).order_by("-timestamp")
     template_name = "drafts.html"
     context_object_name = "drafts"
