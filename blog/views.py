@@ -82,9 +82,13 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class DraftListView(LoginRequiredMixin, ListView):
-    queryset = Post.objects.filter(published_at__isnull=True).order_by("-timestamp")
+    # queryset = Post.objects.filter(published_at__isnull=True).order_by("-timestamp")
     template_name = "drafts.html"
     context_object_name = "drafts"
+
+    def get_queryset(self):
+        self.author = get_author(self.request.user)
+        return Post.objects.filter(published_at__isnull=True, author=self.author).order_by("-timestamp")
 
 
 def delete_comment(request, pk):
