@@ -1,0 +1,9 @@
+<h2>Drafts</h2>
+
+{% for post in drafts %}
+<a href="{{ post.get_absolute_url }}">{{ post.title }}</a> <br>
+Posted at {{ post.published_at|date }} <br>
+Author {{ post.author }}
+{% empty %}
+
+{% endfor %}

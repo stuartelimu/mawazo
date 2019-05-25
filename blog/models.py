@@ -7,7 +7,7 @@ User = get_user_model()
 
 class Author(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    profile_picture = models.ImageField(blank=True, null=True)
+    profile_picture = models.ImageField(default='avatar.png')
 
     def __str__(self):
         return self.user.username
@@ -20,7 +20,7 @@ class Post(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
     published_at = models.DateTimeField(null=True, blank=True)
     views = models.IntegerField(default=0)
-    comments = models.IntegerField(default=0)
+    comment_count = models.IntegerField(default=0)
 
     def publish(self):
         self.published_at = timezone.now()
@@ -30,8 +30,8 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post_detail', kwargs={
-            'id': self.id
+        return reverse('blog:post_detail', kwargs={
+            'pk': self.pk
         })
 
     @property
