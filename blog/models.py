@@ -19,7 +19,7 @@ class Post(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now)
     published_at = models.DateTimeField(null=True, blank=True)
-    views = models.IntegerField(default=0)
+    # views = models.IntegerField(default=0)
     comment_count = models.IntegerField(default=0)
 
     def publish(self):
@@ -38,6 +38,10 @@ class Post(models.Model):
     def get_comments(self):
         return self.comments.all().order_by('-timestamp')
 
+    @property
+    def views(self):
+        return PostView.objects.filter(post=self).count()
+
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -47,5 +51,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class PostView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 

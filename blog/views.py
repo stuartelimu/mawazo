@@ -2,12 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
-from .models import Post, Author, Comment
+from .models import Post, Author, Comment, PostView
 from .forms import PostForm, CommentForm
 
 def get_author(user):
@@ -34,12 +34,14 @@ class PostDetailView(View):
     
     def get(self, request, pk, *args, **kwargs):
         post = get_object_or_404(Post, pk=pk)
+        PostView.objects.get_or_create(user=request.user, post=post)
         comments = Comment.objects.all().order_by("-timestamp")
         form = self.form_class()
         return render(request, self.template_name, {'post':post, 'form':form, 'comments':comments})
 
     def post(self, request, pk, *args, **kwargs):
         post = get_object_or_404(Post, pk=pk)
+        PostView.objects.get_or_create(user=request.user, post=post)
         comments = Comment.objects.all().order_by("-timestamp")
         form = self.form_class(request.POST)
         if form.is_valid():
