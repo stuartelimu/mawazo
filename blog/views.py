@@ -1,11 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
 
 from .models import Post, Author, Comment
 from .forms import PostForm, CommentForm
@@ -27,13 +26,33 @@ class PostListView(ListView):
     context_object_name = "posts"
 
 
-class PostDetailView(DetailView):
-    model = Post
-    context_object_name = "post"
+class PostDetailView(View):
+    form_class = CommentForm
     template_name = "post_detail.html"
+    
+    
+    def get(self, request, pk, *args, **kwargs):
+        post = get_object_or_404(Post, pk=pk)
+        comments = Comment.objects.all().order_by("-timestamp")
+        form = self.form_class()
+        return render(request, self.template_name, {'post':post, 'form':form, 'comments':comments})
+
+    def post(self, request, pk, *args, **kwargs):
+        post = get_object_or_404(Post, pk=pk)
+        comments = Comment.objects.all().order_by("-timestamp")
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.instance.post = post
+            form.save()
+            return redirect(reverse_lazy("blog:post_detail", kwargs={
+                "pk": post.pk
+            }))
+        return render(request, self.template_name, {'post':post, 'form':form, 'comments':comments})
+    
 
 
-class PostCreateView(CreateView):
+class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
     fields = ["title", "content"]
     template_name = "post_create.html"
@@ -65,6 +84,22 @@ class DraftListView(ListView):
     queryset = Post.objects.filter(published_at__isnull=True).order_by("-timestamp")
     template_name = "drafts.html"
     context_object_name = "drafts"
+
+
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    post_pk = comment.post.pk
+    comment.delete()
+    return redirect(reverse("blog:post_detail", kwargs={
+        "pk": post_pk
+    })) 
+
+def post_publish(request, pk):
+    post  = get_object_or_404(Post, pk=pk)
+    post.publish()
+    return redirect(reverse("blog:post_detail", kwargs={
+        "pk": post.pk    
+    }))   
 
 
 

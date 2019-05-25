@@ -1,7 +1,7 @@
 {% for post in posts %}
 <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> <br>
 Posted at {{ post.published_at|date }} <br>
-Author {{ post.author }}
+Author {{ post.author }} <br>
 {% empty %}
 
 {% endfor %}

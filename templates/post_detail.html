@@ -3,3 +3,18 @@ views: {{ post.views }} | comments: {{ post.comment_count }} <br>
 author: {{ post.author }}
 
 <p>{{ post.content }}</p>
+
+<h5>Comments ({{post.comments.count}})</h5>
+{% for comment in comments %}
+<p>{{ comment.content }} {% if request.user.is_staff %}
+<a href="{% url 'blog:comment_delete' comment.pk %}">Delete 🗑</a>{% endif %}</p>
+{% empty %}
+No comments.
+{% endfor %}
+
+<p>Leave a reply</p>
+<form action="." method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Comment</button>
+</form>
