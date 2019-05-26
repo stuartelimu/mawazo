@@ -20,7 +20,7 @@ class Post(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
     published_at = models.DateTimeField(null=True, blank=True)
     # views = models.IntegerField(default=0)
-    comment_count = models.IntegerField(default=0)
+    # comment_count = models.IntegerField(default=0)
 
     def publish(self):
         self.published_at = timezone.now()
@@ -41,6 +41,10 @@ class Post(models.Model):
     @property
     def views(self):
         return PostView.objects.filter(post=self).count()
+
+    @property
+    def comment_count(self):
+        return Comment.objects.filter(post=self).count()
 
 
 class Comment(models.Model):

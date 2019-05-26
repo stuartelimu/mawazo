@@ -5,7 +5,7 @@ author: {{ post.author }}
 <p>{{ post.content }}</p>
 
 <h5>Comments ({{post.comments.count}})</h5>
-{% for comment in comments %}
+{% for comment in post.get_comments %}
 <p>{{ comment.user }}</p>
 <p>{{ comment.content }} {% if request.user.is_superuser %}
 <a href="{% url 'blog:comment_delete' comment.pk %}">Delete 🗑</a>{% endif %}</p>
