@@ -1,0 +1,93 @@
+/* header */
+.header {
+    width: 100%;
+    display: flex;
+    background: #007bff;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.logo img {
+    width: 100%;
+}
+
+.slogan {
+    flex: 1;
+}
+
+
+.feed {
+    margin-top: 30px;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+    
+}
+
+
+
+.feed h5 {
+    padding-bottom: .8rem;
+    border-bottom: 1px solid #dee2e6 !important;
+    
+}
+
+.feed-content {
+    display: flex;
+}
+
+.profile-picture {
+    height: 100px;
+    width: 100px;
+}
+
+.profile-picture img {
+    padding: 1rem;
+    width: 100%;
+    border-radius: 50%;
+    
+}
+
+.post-content {
+    flex: 1;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6 !important;
+
+}
+
+.post-content h4 {
+    text-transform: capitalize;
+}
+
+.post-content h4 a {
+    text-decoration: none;
+    color: initial;
+}
+
+.post-content-meta {
+    display: flex;
+    flex: 1;
+}
+
+.post-content-meta span {
+    padding-right: 1rem;
+}
+
+.post-content-meta i {
+    padding-right: .5rem;
+}
+
+.post-content-meta .fas {
+    color: #007bff;
+}

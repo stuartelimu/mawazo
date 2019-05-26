@@ -1,0 +1,61 @@
+/* global */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    font-family: 'Rubik', sans-serif;
+}
+
+:root {
+    --main-font-color: #333;
+    --main-white: #fff;
+}
+
+section {
+    padding: 1rem 0;
+}
+
+
+/* re-usable classes */
+
+/* navigation */
+.navbar-brand {
+    border-bottom: 2px solid #333 !important;
+    margin-left: 30px;
+}
+
+.navbar-nav li {
+    padding: 0 10px;
+}
+
+.navbar-nav:last-child {
+    padding-right: 4rem;
+}
+
+.navbar-nav li a:hover {
+    color: #002bff !important;
+    transition: 650ms;
+}
+
+.navbar {
+    background-color: transparent !important;
+}
+
+.navbar-toggler {
+    border: none !important;
+}
+
+.nav-link {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--main-font-color) !important;
+}

@@ -1,7 +1,53 @@
-{% for post in posts %}
-<a href="{{ post.get_absolute_url }}">{{ post.title }}</a> <br>
-Posted at {{ post.published_at|date }} <br>
-Author {{ post.author }} <br>
-{% empty %}
+{% extends 'base.html' %}
 
-{% endfor %}
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<section id="content">
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <span><a href=""><img src="{% static 'images/fountain-pen.png' %}" alt=""></a></span>
+      </div>
+      <div class="slogan">
+        <p class="lead">Sharing thoughts since 2019.</p>
+      </div>
+    </div>
+
+    <div class="feed">
+      <h5>Recent Feed</h5>
+      {% for post in posts %}
+      <div class="feed-content">
+        <div class="profile">
+          <div class="profile-picture">
+            <img src="{{ post.author.profile_picture.url }}" alt="">
+          </div>
+        </div>
+        <div class="post-content">
+          <h4 class="lead"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+          <div class="post-content-meta">
+            <span><i class="fas fa-user"></i>{{ post.author }}</span>
+            <span><i class="fas fa-calendar-day"></i>{{ post.published_at|date }}</span>
+            <span><i class="fas fa-comments"></i>{{ post.comments.count }}</span>
+          </div>
+        </div>
+      </div>
+      
+      
+      {% empty %}
+
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock content %}
+
