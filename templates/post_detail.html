@@ -1,17 +1,39 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 <section id="post-detail">
   <div class="container">
-    <div class="row">
-      <h1>{{ post.title }}</h1>
-      views: {{ post.views }} | comments: {{ post.comments.count }} <br>
-      author: {{ post.author }}
-      
-      <p>{{ post.content }}</p>
-      
+    <div class="feed">
+      <div class="feed-content">
+        <div class="profile">
+          <div class="profile-picture">
+            <img src="{{ post.author.profile_picture.url }}" alt="">
+          </div>
+        </div>
+        <div class="post-content">
+          <h4 class="lead">{{ post.title }}</h4>
+          <div class="post-content-meta">
+            <span><i class="fas fa-user"></i>{{ post.author }}</span>
+            <span><i class="fas fa-calendar-day"></i>{{ post.published_at|date }}</span>
+            <span><i class="fas fa-comments"></i>{{ post.comments.count }}</span>
+            <span><i class="fas fa-eye"></i>{{ post.views }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="feed">
+      {{ post.content }}
+    </div>
+
+    <div class="feed">
       <h5>Comments ({{post.comments.count}})</h5>
+      <div class="feed-content">
       {% for comment in post.get_comments %}
+      
       <p>{{ comment.user }}</p>
       <p>{{ comment.content }} {% if request.user.is_superuser %}
       <a href="{% url 'blog:comment_delete' comment.pk %}">Delete 🗑</a>{% endif %}</p>
@@ -19,12 +41,15 @@
       {% empty %}
       No comments.
       {% endfor %}
-      
-      <p>Leave a reply</p>
+      </div>
+    </div>
+
+    <div class="feed">
+      <h5>Leave a reply</h5>
       <form action="." method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Comment</button>
+        <button class="btn btn-primary" type="submit">Comment</button>
       </form>
     </div>
   </div>
