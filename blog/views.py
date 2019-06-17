@@ -34,7 +34,7 @@ class PostDetailView(View):
     
     def get(self, request, pk, *args, **kwargs):
         post = get_object_or_404(Post, pk=pk)
-        PostView.objects.get_or_create(user=request.user, post=post)
+        # PostView.objects.get_or_create(post=post)
         comments = Comment.objects.all().order_by("-timestamp")
         form = self.form_class()
         return render(request, self.template_name, {'post':post, 'form':form, 'comments':comments})
