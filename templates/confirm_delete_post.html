@@ -1,5 +1,17 @@
-are you sure you want to delete {{post.title}} ? 😢
-<form action="." method="post">
-  {% csrf_token %}
-  <button type="submit">Delete</button>
-</form>
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+
+  <div class="feed">
+    <h5>Are you sure you want to delete {{post.title}} ? 😢</h5>
+    <form action="." method="post">
+      {% csrf_token %}
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}
