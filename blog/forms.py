@@ -3,10 +3,9 @@ from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
-    
     class Meta:
         model = Post
-        fields = ("title", "content")
+        fields = ("title", "content",)
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": "Title", "class": "form-control"}),
             "content": forms.Textarea(attrs={"placeholder": "Share your thoughts...", "class": "editable medium-editor-textarea form-control"}),
@@ -15,7 +14,7 @@ class PostForm(forms.ModelForm):
             "title": "",
             "content": "",
         }
-        
+    
 
 class CommentForm(forms.ModelForm):
     class Meta:

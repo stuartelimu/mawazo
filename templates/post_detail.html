@@ -20,6 +20,12 @@
             <span><i class="fas fa-comments"></i>{{ post.comments.count }}</span>
             <span><i class="fas fa-eye"></i>{{ post.views }}</span>
           </div>
+          {% if request.user == post.author.user %}
+          <div class="post-content-meta">
+            <span><i class="fas fa-pen"></i><a href="{% url 'blog:post_update' post.pk %}">Update</a></span>
+            <span><a class="" href="{% url 'blog:post_delete' post.pk %}">🗑 Delete</a></span>
+          </div>
+          {% endif %}
         </div>
       </div>
 
