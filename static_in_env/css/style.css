@@ -122,3 +122,8 @@ section {
     letter-spacing: 2px;
     color: var(--main-font-color) !important;
 }
+
+/* remove bullets from signup */
+.feed ul {
+    list-style: none !important;
+}

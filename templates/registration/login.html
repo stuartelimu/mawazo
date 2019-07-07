@@ -1,4 +1,11 @@
+{% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+  <div class="feed">
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -12,9 +19,16 @@ please login with an account that has access.</p>
 {% endif %}
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="login">
+{{ form | crispy }}
+<input type="submit" class="btn btn-primary" value="Login">
 <input type="hidden" name="next" value="{{ next }}">
 </form>
 {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+</p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+</p>Don't have an account? <a href="{% url 'accounts:signup' %}">Sign Up</a></p>
+
+</div>
+</div>
+
+{% endblock content %}

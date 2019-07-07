@@ -60,6 +60,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     fields = ["title", "content"]
     template_name = "post_create.html"
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['title'] = 'Create'
+        return context
+
     def form_valid(self, form):
         author = get_author(self.request.user)
         form.instance.author = author
@@ -70,6 +77,13 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ["title", "content"]
     template_name = "post_create.html"
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['title'] = 'Update'
+        return context
 
     def form_valid(self, form):
         author = get_author(self.request.user)

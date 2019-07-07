@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% load static %}
 
 {% block content %}
@@ -52,9 +54,9 @@
 
     <div class="feed">
       <h5>Leave a reply</h5>
-      <form action="." method="post">
+      <form action="." method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button class="btn btn-primary" type="submit">Comment</button>
       </form>
     </div>
