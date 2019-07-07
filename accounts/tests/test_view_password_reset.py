@@ -110,3 +110,26 @@ class PasswordResetConfirmTests(TestCase):
         '''
         self.assertContains(self.response, '<input', 3)
         self.assertContains(self.response, 'type="password"', 2)
+
+
+class InvalidPasswordResetConfirmTests(TestCase):
+    def setUp(self):
+        user = User.objects.create_user(username='john', email='john@doe.com', password='123abcdef')
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        
+        # invalidate the token by changing the password
+        
+        user.set_password('abcdef123')
+        user.save()
+
+        url = reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+        self.response = self.client.get(url)
+
+    def test_status_code(self):
+        self.assertEquals(self.response.status_code, 200)
+
+    def test_html(self):
+        password_reset_url = reverse('password_reset')
+        self.assertContains(self.response, 'The password reset link was invalid')
+        self.assertContains(self.response, 'href="{0}"'.format(password_reset_url))
