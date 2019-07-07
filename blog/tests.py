@@ -72,3 +72,7 @@ class PostCreateTests(TestCase):
         self.assertFalse(Post.objects.exists())
 
 
+
+
+
+
