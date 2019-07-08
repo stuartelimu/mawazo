@@ -137,12 +137,12 @@ class InvalidPasswordResetConfirmTests(TestCase):
 
 class PasswordResetCompleteTests(TestCase):
     def setUp(self):
-        url = reverse('password_reset_done')
+        url = reverse('password_reset_complete')
         self.response = self.client.get(url)
 
     def test_status_code(self):
         self.assertEquals(self.response.status_code, 200)
 
     def test_view_function(self):
-        view = resolve('/accounts/password_reset/done/')
-        self.assertEquals(view.func.view_class, auth_views.PasswordResetDoneView)
+        view = resolve('/accounts/reset/done/')
+        self.assertEquals(view.func.view_class, auth_views.PasswordResetCompleteView)
