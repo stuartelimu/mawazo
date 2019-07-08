@@ -146,3 +146,11 @@ class PasswordResetCompleteTests(TestCase):
     def test_view_function(self):
         view = resolve('/accounts/reset/done/')
         self.assertEquals(view.func.view_class, auth_views.PasswordResetCompleteView)
+
+
+class LoginRequiredPasswordChangeTests(TestCase):
+    def test_redirection(self):
+        url = reverse('password_change')
+        login_url = reverse('login')
+        response = self.client.get(url)
+        self.assertRedirects(response, f'{login_url}?next={url}')
