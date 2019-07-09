@@ -58,3 +58,13 @@ class PostCreateTests(TestCase):
         response = self.client.post(url, data)
         self.assertEquals(response.status_code, 200)
         self.assertFalse(Post.objects.exists())
+
+
+class LoginRequiredPostCreateTests(TestCase):
+    def setUp(self):
+        self.url = reverse('blog:post_create')
+        self.response = self.client.get(self.url)
+
+    def test_redirection(self):
+        login_url = reverse('login')
+        self.assertRedirects(self.response, '{login_url}?next={url}'.format(login_url=login_url, url=self.url))
