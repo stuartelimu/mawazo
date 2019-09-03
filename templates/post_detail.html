@@ -52,6 +52,7 @@
       </div>
     </div>
 
+    {% if request.user.is_authenticated %}
     <div class="feed">
       <h5>Leave a reply</h5>
       <form action="." method="post" enctype="multipart/form-data">
@@ -60,6 +61,7 @@
         <button class="btn btn-primary" type="submit">Comment</button>
       </form>
     </div>
+    {% endif %}
   </div>
 </section>
 
