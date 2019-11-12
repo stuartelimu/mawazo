@@ -56,9 +56,9 @@ EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 
-DEFAULT_FROM_EMAIL = 'mawazo@localhost'
+DEFAULT_FROM_EMAIL = 'mawazo@mawazo'
 
-SERVER_EMAIL = 'mawazo@localhost'
+SERVER_EMAIL = 'mawazo@mawazo'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
