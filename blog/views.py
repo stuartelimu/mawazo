@@ -22,7 +22,7 @@ class AboutView(TemplateView):
 
 
 class PostListView(ListView):
-    queryset = Post.objects.filter(published_at__lte=timezone.now()).order_by("-timestamp")
+    queryset = Post.objects.order_by("-timestamp")
     template_name = "index.html"
     context_object_name = "posts"
 
